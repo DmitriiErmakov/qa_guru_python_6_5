@@ -1,0 +1,38 @@
+import os
+from selene import browser, be, have
+
+
+def test_registration_form(browser_open):
+    browser.element("//input[@id='firstName']").should(be.blank).type("Test")
+    browser.element("//input[@id='lastName']").should(be.blank).type("Test")
+    browser.element("//input[@id='userEmail']").should(be.blank).type("Test@test.com")
+    browser.element("//label[@for='gender-radio-1']").click()
+    browser.element("//input[@id='userNumber']").should(be.blank).type("8888888888")
+    browser.element("//input[@id='dateOfBirthInput']").click()
+    browser.element("//select[@class='react-datepicker__month-select']").click()
+    browser.element("//option[@value='5']").click()
+    browser.element("//select[@class='react-datepicker__year-select']").click()
+    browser.element("//option[@value='2000']").click()
+    browser.element("//div[@class='react-datepicker__day react-datepicker__day--013']").click()
+    browser.element("//input[@id='subjectsInput']").should(be.blank).type("Eng").press_enter()
+    browser.element("//label[@for='hobbies-checkbox-3']").click()
+    browser.element("//input[@id='uploadPicture']").send_keys(os.path.abspath('resources/picture.png'))
+    browser.element("//textarea[@id='currentAddress']").should(be.blank).type("Test")
+    browser.element("//div[@id='state']").click()
+    browser.element("//*[.='Uttar Pradesh']").click()
+    browser.element("//div[@id='city']").click()
+    browser.element("//*[.='Agra']").click()
+    browser.element("//button[@id='submit']").press_enter()
+
+    browser.element('#example-modal-sizes-title-lg').should(have.text('Thanks for submitting the form'))
+    browser.element('.table-responsive').should(have.text('Test'))
+    browser.element('.table-responsive').should(have.text('Test'))
+    browser.element('.table-responsive').should(have.text('Test@test.com'))
+    browser.element('.table-responsive').should(have.text('Male'))
+    browser.element('.table-responsive').should(have.text('8888888888'))
+    browser.element('.table-responsive').should(have.text('13 June,2000'))
+    browser.element('.table-responsive').should(have.text('English'))
+    browser.element('.table-responsive').should(have.text('Music'))
+    browser.element('.table-responsive').should(have.text('picture.png'))
+    browser.element('.table-responsive').should(have.text('Test'))
+    browser.element('.table-responsive').should(have.text('Uttar Pradesh Agra'))
